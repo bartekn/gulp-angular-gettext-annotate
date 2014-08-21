@@ -1,6 +1,6 @@
 {
   "name": "gulp-angular-gettext-annotate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Gulp plugin for adding angular-gettext annotations to templates.",
   "license": "MIT",
   "repository": "bartekn/gulp-angular-gettext-annotate",

@@ -11,6 +11,12 @@ var expect = require('chai').expect;
 del.sync('test/annotated');
 
 describe('gulp-angular-gettext-annotate', function () {
+  afterEach(function(done){
+    // Remove annotated files
+    del.sync('test/annotated');
+    done();
+  });
+
   it('should annotate node with binding and text', function (done) {
     test('test/templates/testManyBindingsInTextNode.html', done);
   });
@@ -21,6 +27,26 @@ describe('gulp-angular-gettext-annotate', function () {
 
   it('should not annotate node with binding only', function (done) {
     test('test/templates/testBindingOnlyTextNode.html', done);
+  });
+
+  it('should annotate lowest level nodes only', function (done) {
+    test('test/templates/testEmptyTextNodes.html', done);
+  });
+
+  it('should not annotate anything in <head>', function (done) {
+    test('test/templates/testHead.html', done);
+  });
+
+  it('should not annotate anything in <script> and <style>', function (done) {
+    test('test/templates/testScriptStyle.html', done);
+  });
+
+  it('should not annotate nodes with bindings and whitespaces only', function (done) {
+    test('test/templates/testBindingsAndWhitespaces.html', done);
+  });
+
+  it('should not annotate nodes with bindings, tags and whitespaces only', function (done) {
+    test('test/templates/testBindingsInlineTagsAndWhitespaces.html', done);
   });
 
   it('should annotate lowest level nodes only', function (done) {
@@ -49,8 +75,6 @@ function test(src, done) {
         expect(annotated).to.equal(expected);
       }
 
-      // Remove annotated files
-      del.sync('test/annotated');
       done();
     });
 }
